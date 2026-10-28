@@ -127,7 +127,7 @@ export const STR = {
 };
 
 let LANG = 'pt-BR';
-let CURRENCY = 'EUR';
+let CURRENCY = 'BRL';
 export function t(key) { return (STR[LANG] || STR.de)[key] ?? STR.en[key] ?? key; }
 export function setLang(l) { if (STR[l]) LANG = l; }
 export function money(v) {
@@ -138,7 +138,7 @@ export function money(v) {
 // The currency symbol alone (e.g. "€" for EUR) — used to label price inputs.
 export function currencySymbol() {
   try {
-    const parts = new Intl.NumberFormat(LANG === 'de' ? 'de-AT' : 'en-US', {
+    const parts = new Intl.NumberFormat(LANG === 'de' ? 'de-AT' : (LANG === 'pt-BR' ? 'pt-BR' : 'en-US'), {
       style: 'currency', currency: CURRENCY,
     }).formatToParts(0);
     return parts.find((p) => p.type === 'currency')?.value || CURRENCY;
