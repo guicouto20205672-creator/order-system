@@ -73,7 +73,7 @@ async function asFest() {
 test('config and seeded menu are available', async () => {
   const { status, json } = await jf('/api/config');
   assert.equal(status, 200);
-  assert.equal(json.currency, 'EUR');
+  assert.equal(json.currency, 'BRL');
   assert.ok(json.stations.find((s) => s.id === 'food'));
 });
 
