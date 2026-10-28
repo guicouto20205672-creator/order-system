@@ -35,8 +35,8 @@ const config = {
   sessionSecret: process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex'),
   waiterTokenTtlHours: Number(process.env.WAITER_TOKEN_TTL_HOURS) || 24,
 
-  defaultLang: process.env.DEFAULT_LANG || 'de',
-  currency: process.env.CURRENCY || 'EUR',
+  defaultLang: process.env.DEFAULT_LANG || 'pt-BR',
+  currency: process.env.CURRENCY || 'BRL',
 
   printer: {
     type: (process.env.PRINTER_TYPE || 'none').toLowerCase(),
