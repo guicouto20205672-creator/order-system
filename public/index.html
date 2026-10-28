@@ -3,106 +3,104 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#c0392b" />
-  <meta name="description" content="Sistema do Bar — pedidos pelo celular, atendimento por mesas, bar e cozinha sincronizados em tempo real." />
+  <meta name="theme-color" content="#101828" />
+  <meta name="description" content="Sistema integrado para mesas, comandas e pedidos de bar e restaurante." />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
   <link rel="icon" href="icons/icon-192.png" />
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/landing.css" />
-  <title>Sistema do Bar — Pedidos e Comandas</title>
+  <title>Sistema do Bar | Central de operações</title>
+  <style>
+    :root { --hub-ink:#101828; --hub-muted:#667085; --hub-line:#e6eaf0; --hub-bg:#f5f7fb; --hub-green:#16a36a; }
+    body.hub { margin:0; min-height:100vh; background:var(--hub-bg); color:var(--hub-ink); font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    .hub-nav { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1rem clamp(1rem,4vw,3rem); background:#fff; border-bottom:1px solid var(--hub-line); }
+    .hub-brand { display:flex; align-items:center; gap:.75rem; font-size:1.05rem; font-weight:800; text-decoration:none; color:var(--hub-ink); }
+    .hub-mark { display:grid; place-items:center; width:42px; height:42px; border-radius:13px; color:#fff; background:linear-gradient(135deg,#16a36a,#087f5b); font-size:1.3rem; box-shadow:0 7px 18px #16a36a30; }
+    .hub-state { display:flex; align-items:center; gap:.45rem; color:#027a48; background:#ecfdf3; border:1px solid #abefc6; padding:.45rem .7rem; border-radius:999px; font-size:.78rem; font-weight:700; }
+    .hub-main { width:min(1180px,calc(100% - 2rem)); margin:0 auto; padding:clamp(1.5rem,4vw,3.5rem) 0; }
+    .hub-hero { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(220px,.65fr); gap:2rem; align-items:center; padding:clamp(1.5rem,4vw,3rem); color:#fff; background:radial-gradient(circle at 90% 10%,#244d61 0,transparent 36%),linear-gradient(130deg,#101828,#172b3c 65%,#123b35); border-radius:26px; box-shadow:0 18px 45px #10182818; }
+    .hub-eyebrow { color:#8af0bf; font-size:.76rem; font-weight:800; text-transform:uppercase; letter-spacing:.13em; }
+    .hub-hero h1 { margin:.7rem 0 .8rem; max-width:700px; font-size:clamp(2rem,5vw,3.5rem); line-height:1.06; letter-spacing:-.045em; }
+    .hub-hero p { max-width:650px; margin:0; color:#d0d5dd; line-height:1.7; }
+    .hub-hero-art { display:grid; place-items:center; min-height:190px; border:1px solid #ffffff25; border-radius:22px; background:#ffffff0b; font-size:5rem; }
+    .hub-section-head { display:flex; align-items:end; justify-content:space-between; gap:1rem; margin:2rem 0 1rem; }
+    .hub-section-head h2 { margin:0; font-size:1.35rem; letter-spacing:-.025em; }
+    .hub-section-head p { margin:.35rem 0 0; color:var(--hub-muted); font-size:.92rem; }
+    .hub-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+    .hub-card { display:flex; flex-direction:column; min-height:210px; padding:1.25rem; background:#fff; border:1px solid var(--hub-line); border-radius:18px; box-shadow:0 4px 14px #10182806; text-decoration:none; color:inherit; transition:transform .18s,border-color .18s,box-shadow .18s; }
+    .hub-card[href]:hover { transform:translateY(-3px); border-color:#8ce0b8; box-shadow:0 14px 30px #1018280d; }
+    .hub-card-top { display:flex; justify-content:space-between; align-items:center; gap:.75rem; }
+    .hub-icon { display:grid; place-items:center; width:48px; height:48px; border-radius:14px; background:#ecfdf3; font-size:1.45rem; }
+    .hub-arrow { color:#98a2b3; font-size:1.25rem; }
+    .hub-card h3 { margin:1.1rem 0 .4rem; font-size:1.05rem; }
+    .hub-card p { margin:0; color:var(--hub-muted); font-size:.88rem; line-height:1.55; }
+    .hub-tag { align-self:flex-start; margin-top:auto; padding-top:1rem; color:#027a48; font-size:.76rem; font-weight:800; }
+    .hub-card.soon { background:#fbfcfe; border-style:dashed; }
+    .hub-card.soon .hub-icon { background:#f2f4f7; }
+    .hub-card.soon .hub-tag { color:#667085; }
+    .hub-note { display:flex; gap:.9rem; align-items:flex-start; margin-top:1.25rem; padding:1rem 1.1rem; background:#fff; border:1px solid var(--hub-line); border-radius:15px; color:var(--hub-muted); font-size:.88rem; line-height:1.6; }
+    .hub-note strong { color:var(--hub-ink); }
+    .hub-footer { padding:1.5rem 0 .5rem; text-align:center; color:#98a2b3; font-size:.78rem; }
+    @media(max-width:800px){ .hub-hero{grid-template-columns:1fr}.hub-hero-art{display:none}.hub-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+    @media(max-width:520px){ .hub-nav{padding:.8rem 1rem}.hub-state{font-size:0}.hub-state::before{content:"●";font-size:.7rem}.hub-main{width:calc(100% - 1.25rem);padding-top:.75rem}.hub-hero{padding:1.4rem;border-radius:20px}.hub-grid{grid-template-columns:1fr}.hub-card{min-height:175px}.hub-section-head{align-items:flex-start;flex-direction:column} }
+  </style>
 </head>
-<body class="landing">
-  <header class="lp-nav">
-    <a class="lp-logo" href="/">🍻 Sistema do Bar</a>
-    <nav class="lp-links">
-      <a href="#features">Recursos</a>
-      <a href="#how">Como funciona</a>
-      <a href="#rent">Sobre o sistema</a>
-      <a href="https://github.com/mrckurz/order-system" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn btn-primary btn-sm" href="admin.html">Entrar</a>
-    </nav>
+<body class="hub">
+  <header class="hub-nav">
+    <a class="hub-brand" href="/">
+      <span class="hub-mark">🍻</span>
+      <span>Sistema do Bar<small style="display:block;font-size:.72rem;color:#667085;font-weight:500;margin-top:2px">Central de operações</small></span>
+    </a>
+    <span class="hub-state">Plataforma pronta para iniciar</span>
   </header>
 
-  <section class="lp-hero">
-    <div class="lp-hero-inner">
-      <span class="lp-badge">Pedidos em tempo real · Celular e computador</span>
-      <h1>O sistema de pedidos do seu <span class="hl">bar</span>.</h1>
-      <p class="lp-sub">
-        Garçons lançam pedidos pelo celular, bar e cozinha recebem tudo em tempo real e o caixa acompanha o movimento em um só lugar.
-      </p>
-      <div class="lp-cta">
-        <a class="btn btn-primary" href="#screens">Acessar telas</a>
-        <a class="btn btn-ghost" href="#how">Como funciona</a>
+  <main class="hub-main">
+    <section class="hub-hero">
+      <div>
+        <span class="hub-eyebrow">Atendimento conectado</span>
+        <h1>Seu bar organizado.<br>Pedidos no ritmo certo.</h1>
+        <p>Uma central para administrar o atendimento, enviar pedidos do garçom para o bar e a cozinha e acompanhar a operação em um só lugar.</p>
       </div>
-      <div class="lp-flow" aria-hidden="true">
-        <span class="node">📱 Garçom</span>
-        <span class="arrow">→</span>
-        <span class="node">☁️ Sistema</span>
-        <span class="arrow">→</span>
-        <span class="node">🍺 Bar</span>
-        <span class="node">🍴 Cozinha</span>
+      <div class="hub-hero-art" aria-hidden="true">🍽️</div>
+    </section>
+
+    <section aria-labelledby="roles-title">
+      <div class="hub-section-head">
+        <div><h2 id="roles-title">Acesse sua área</h2><p>Escolha a tela de acordo com sua função.</p></div>
       </div>
-    </div>
-  </section>
+      <div class="hub-grid">
+        <a class="hub-card" href="admin.html">
+          <div class="hub-card-top"><span class="hub-icon">⚙️</span><span class="hub-arrow">↗</span></div>
+          <h3>Administração</h3><p>Gerenciar cardápio, equipe, garçons, eventos e acompanhar os pedidos.</p><span class="hub-tag">Acessar painel →</span>
+        </a>
+        <a class="hub-card" href="bar.html">
+          <div class="hub-card-top"><span class="hub-icon">🍹</span><span class="hub-arrow">↗</span></div>
+          <h3>Bar</h3><p>Visualizar pedidos de bebidas e atualizar o andamento do preparo.</p><span class="hub-tag">Acessar pedidos →</span>
+        </a>
+        <a class="hub-card" href="kitchen.html">
+          <div class="hub-card-top"><span class="hub-icon">👨‍🍳</span><span class="hub-arrow">↗</span></div>
+          <h3>Cozinha</h3><p>Receber os pedidos de comida e acompanhar os itens em preparação.</p><span class="hub-tag">Acessar cozinha →</span>
+        </a>
+        <article class="hub-card">
+          <div class="hub-card-top"><span class="hub-icon">📱</span><span class="hub-arrow">↗</span></div>
+          <h3>Garçom · celular</h3><p>O garçom usa um link individual criado pelo administrador para lançar pedidos pelo celular.</p><span class="hub-tag">Link criado no painel de garçons</span>
+        </article>
+        <article class="hub-card soon">
+          <div class="hub-card-top"><span class="hub-icon">💳</span><span class="hub-arrow">＋</span></div>
+          <h3>Caixa e pagamentos</h3><p>Área de fechamento de comandas e registro de pagamentos a integrar ao fluxo completo.</p><span class="hub-tag">Etapa de desenvolvimento</span>
+        </article>
+        <article class="hub-card soon">
+          <div class="hub-card-top"><span class="hub-icon">📊</span><span class="hub-arrow">＋</span></div>
+          <h3>Estoque e indicadores</h3><p>Gestão ampliada de estoque, movimentações e indicadores do negócio.</p><span class="hub-tag">Etapa de desenvolvimento</span>
+        </article>
+      </div>
+    </section>
 
-  <section id="features" class="lp-section">
-    <h2>Recursos</h2>
-    <p class="lp-lead">Tudo para organizar os pedidos e o atendimento do seu bar.</p>
-    <div class="lp-grid">
-      <div class="lp-card"><div class="lp-ico">📱</div><h3>Bestellen am Handy</h3><p>Kellner nutzen ihr eigenes Smartphone als App (PWA) – nichts zu installieren, funktioniert auch bei kurzem WLAN-Aussetzer.</p></div>
-      <div class="lp-card"><div class="lp-ico">🔗</div><h3>Einmal-Links</h3><p>Jeder Kellner bekommt einen persönlichen Link – einmal nutzbar, gerätegebunden, mit Ablaufzeit. Kein Passwort nötig.</p></div>
-      <div class="lp-card"><div class="lp-ico">🍺</div><h3>Live-Schank</h3><p>Getränke-Bestellungen erscheinen sofort am Schank-Bildschirm, gruppiert nach Bestellung und Kellner.</p></div>
-      <div class="lp-card"><div class="lp-ico">🍴</div><h3>Speisenausgabe</h3><p>Küchen-Display in Eintreff-Reihenfolge – optional mit Bondrucker für gedruckte Tickets.</p></div>
-      <div class="lp-card"><div class="lp-ico">🎪</div><h3>Mehrere Feste</h3><p>Jedes Fest mit eigener Speisekarte, eigenen Preisen, Kellnern und Bestellungen – dauerhaft gespeichert.</p></div>
-      <div class="lp-card"><div class="lp-ico">📊</div><h3>Statistik & Export</h3><p>Umsatz gesamt, pro Kellner, pro Produkt und pro Station – als Dashboard und CSV-Export pro Fest.</p></div>
-      <div class="lp-card"><div class="lp-ico">👥</div><h3>Konten & Rollen</h3><p>Admin, Schank/Küche-Stationen und Kellner – jeder sieht genau das, was er braucht.</p></div>
-      <div class="lp-card"><div class="lp-ico">🔒</div><h3>Sicher & DSGVO</h3><p>Gehashte Passwörter, HTTPS, Hosting in der EU. Deine Daten bleiben deine Daten.</p></div>
-    </div>
-  </section>
-
-  <section class="lp-band">
-    <div id="how" class="lp-section">
-      <h2>Como funciona</h2>
-      <p class="lp-lead">In vier Schritten startklar.</p>
-      <ol class="lp-steps">
-        <li><div><h3>Fest & Speisekarte anlegen</h3><p>Im Admin ein Fest erstellen und Artikel/Preise festlegen – oder die Karte vom letzten Jahr kopieren.</p></div></li>
-        <li><div><h3>Kellner anlegen & Links verteilen</h3><p>Pro Helfer einen Einmal-Link erzeugen und per Chat oder QR-Code teilen.</p></div></li>
-        <li><div><h3>Bestellen & ausgeben</h3><p>Gäste bestellen, Schank und Küche arbeiten die Bestellungen live ab und haken sie ab.</p></div></li>
-        <li><div><h3>Auswerten</h3><p>Nach dem Fest Umsätze und Verkaufszahlen ansehen und als CSV exportieren.</p></div></li>
-      </ol>
-    </div>
-  </section>
-
-  <section id="rent" class="lp-rent">
-    <h2>Feito para organizar o atendimento</h2>
-    <p>
-      Kein eigener Server nötig: Du bekommst deinen eigenen Zugang auf dieser Plattform, legst
-      dein Fest an und legst los. Jeder Veranstalter sieht ausschließlich seine eigenen Daten.
-    </p>
-    <a class="btn btn-light" href="mailto:office@marckurz-consulting.at?subject=OrderFlow%20f%C3%BCr%20unser%20Fest">Zugang anfragen</a>
-  </section>
-
-  <section id="screens" class="lp-section">
-    <h2>Bildschirme</h2>
-    <p class="lp-lead">Für Organisator und Stationen. Kellner erhalten ihren persönlichen Link.</p>
-    <div class="roles">
-      <a href="admin.html"><span class="ico">⚙️</span><span>Admin</span></a>
-      <a href="bar.html"><span class="ico">🍺</span><span>Schank</span></a>
-      <a href="kitchen.html"><span class="ico">🍴</span><span>Küche</span></a>
-    </div>
-  </section>
-
-  <footer class="lp-footer">
-    <div>© <span id="year">2026</span> OrderFlow · MIT-Lizenz · Open Source</div>
-    <div>
-      <a href="impressum.html">Impressum</a> ·
-      <a href="datenschutz.html">Datenschutz</a> ·
-      <a href="https://github.com/mrckurz/order-system" target="_blank" rel="noopener">GitHub</a>
-    </div>
-  </footer>
-
-  <script src="config.js"></script>
-  <script src="js/index.js" type="module"></script>
+    <aside class="hub-note">
+      <span style="font-size:1.25rem">ℹ️</span>
+      <div><strong>Importante para os testes</strong><br>O painel administrativo, o bar e a cozinha dependem do servidor e do banco de dados do sistema. A publicação estática do GitHub Pages, sozinha, não conecta essas telas ao backend. O caixa completo ainda precisa ser implementado antes de usar o sistema em atendimento real.</div>
+    </aside>
+    <footer class="hub-footer">Sistema do Bar · Projeto em desenvolvimento · Teste antes de usar em produção</footer>
+  </main>
 </body>
 </html>
