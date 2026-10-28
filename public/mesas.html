@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f172a"><title>Mesas e Comandas | Sistema do Bar</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+:root{--ink:#172033;--muted:#667085;--line:#e7eaf0;--green:#0f9f6e;--bg:#f4f6fa}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.shell{display:grid;grid-template-columns:220px 1fr;min-height:100vh}.side{background:#101828;color:#fff;padding:22px 14px}.brand{font-weight:800;font-size:20px;padding:6px 10px 28px}.brand small{display:block;color:#aeb8c8;font-size:11px;font-weight:500;margin-top:4px}.nav a{display:block;color:#cbd5e1;text-decoration:none;padding:12px;border-radius:10px;margin:4px 0;font-size:14px}.nav a.active,.nav a:hover{background:#167a5b;color:#fff}.main{padding:28px;min-width:0}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.eyebrow{color:#07835b;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.title{font-size:28px;margin:6px 0}.sub{color:var(--muted);margin:0}.btn{border:0;border-radius:10px;padding:11px 15px;background:#0f9f6e;color:white;font-weight:700;cursor:pointer}.btn.secondary{background:#fff;border:1px solid var(--line);color:var(--ink)}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:24px 0}.stat,.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}.stat span{color:var(--muted);font-size:13px}.stat strong{display:block;font-size:26px;margin-top:8px}.tools{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 13px;cursor:pointer}.filter.active{background:#e9f8f1;color:#087f5b;border-color:#a7e7ca}.tables{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.table-card{border:1px solid #b7e8d2;background:linear-gradient(145deg,#e9fbf2,#d0f5e4);border-radius:14px;padding:15px;min-height:112px;text-align:left;cursor:pointer;color:#075d43}.table-card.occupied{background:linear-gradient(145deg,#fff5e5,#ffebc5);border-color:#f3d49a;color:#8b4a0b}.table-card .num{font-size:17px;font-weight:800}.table-card .status{font-size:11px;margin-top:8px;display:block}.table-card .amount{font-size:13px;font-weight:800;margin-top:6px;display:block}.notice{margin-top:18px;padding:14px 16px;border-radius:12px;background:#fff7e6;border:1px solid #f4d79b;color:#7a4a05;font-size:13px;line-height:1.5}.notice.good{background:#ecfdf3;border-color:#abefc6;color:#067647}.search{padding:10px 12px;border:1px solid var(--line);border-radius:10px;min-width:220px;max-width:100%}.empty{padding:30px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:14px;grid-column:1/-1}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.side{padding:10px 12px}.brand{padding:6px 8px 10px}.nav{display:flex;overflow:auto}.nav a{white-space:nowrap}.main{padding:18px}.tables{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:520px){.stats{grid-template-columns:1fr}.tables{grid-template-columns:repeat(2,minmax(0,1fr))}.title{font-size:24px}.main{padding:14px}.search{width:100%}}
+</style>
+</head><body>
+<div class="shell">
+<aside class="side"><div class="brand">🍻 Sistema do Bar<small>Gestão de atendimento</small></div><nav class="nav">
+<a href="index.html">⌂ Visão geral</a><a class="active" href="mesas.html">▦ Mesas e comandas</a><a href="pdv.html">▣ PDV / Vendas</a><a href="admin.html">⚙ Administração</a><a href="bar.html">🍹 Bar</a><a href="kitchen.html">♨ Cozinha</a><a href="cashier.html">▤ Caixa</a>
+</nav></aside>
+<main class="main">
+<header class="top"><div><div class="eyebrow">Atendimento</div><h1 class="title">Mesas e comandas</h1><p class="sub">Acompanhe mesas livres, ocupadas e o consumo em aberto.</p></div><button class="btn" id="refresh">↻ Atualizar mesas</button></header>
+<section class="stats"><div class="stat"><span>Total de mesas</span><strong id="total">20</strong></div><div class="stat"><span>Disponíveis</span><strong id="available">—</strong></div><div class="stat"><span>Em uso</span><strong id="occupied">—</strong></div></section>
+<section class="panel"><div class="tools"><div class="filters"><button class="filter active" data-filter="all">Todas</button><button class="filter" data-filter="occupied">Em uso</button><button class="filter" data-filter="free">Disponíveis</button></div><input class="search" id="search" placeholder="Buscar mesa pelo número"></div><div class="tables" id="tables"><div class="empty">Conferindo conexão e carregando mesas…</div></div><div id="notice" class="notice">Para mostrar os pedidos e valores reais, esta tela precisa estar conectada ao servidor do sistema.</div></section>
+</main></div>
+<script type="module" src="js/mesas.js"></script>
+</body></html>
