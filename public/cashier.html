@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101828" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <title>Sistema do Bar · Caixa</title>
+  <style>
+    body.cash{margin:0;background:#f5f7fb;color:#101828;font-family:Inter,system-ui,sans-serif}
+    .cash-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem,4vw,2rem);background:#101828;color:#fff}
+    .cash-brand{font-weight:800;font-size:1.1rem}.cash-brand small{display:block;color:#98a2b3;font-size:.75rem;font-weight:500;margin-top:.2rem}
+    .cash-wrap{width:min(1180px,calc(100% - 2rem));margin:0 auto;padding:1.5rem 0 3rem}
+    .cash-heading{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem}
+    .cash-heading h1{font-size:clamp(1.5rem,3vw,2rem);margin:0;letter-spacing:-.035em}.cash-heading p{color:#667085;margin:.4rem 0 0}
+    .cash-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-bottom:1.25rem}
+    .cash-stat,.cash-table,.cash-history{background:#fff;border:1px solid #e6eaf0;border-radius:16px;padding:1rem}
+    .cash-stat span{color:#667085;font-size:.82rem}.cash-stat strong{display:block;font-size:1.5rem;margin-top:.35rem}
+    .cash-tables{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .cash-table h3{margin:0;font-size:1.05rem}.cash-table .cash-total{font-size:1.55rem;font-weight:800;margin:.75rem 0}.cash-meta{color:#667085;font-size:.82rem}
+    .cash-orders{margin:.75rem 0;padding:.7rem 0;border-top:1px solid #edf0f4;border-bottom:1px solid #edf0f4;font-size:.84rem;line-height:1.7}
+    .cash-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;margin-top:.8rem}
+    .cash-pay{border:0;border-radius:9px;padding:.7rem .5rem;color:#fff;background:#1570ef;font-weight:700;cursor:pointer}.cash-pay.pix{background:#079455}.cash-pay.cash{background:#344054}.cash-pay:disabled{opacity:.55}
+    .cash-section{margin:1.8rem 0 .9rem;font-size:1.2rem}
+    .cash-history{padding:0;overflow:hidden}.cash-history-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.6rem;padding:.85rem 1rem;border-bottom:1px solid #edf0f4;font-size:.86rem}.cash-history-row:last-child{border-bottom:0}.cash-muted{color:#667085}
+    .cash-empty{padding:2rem;text-align:center;color:#667085;background:#fff;border:1px dashed #d0d5dd;border-radius:16px}
+    .cash-refresh{border:1px solid #d0d5dd;background:#fff;color:#344054;border-radius:9px;padding:.65rem .9rem;font-weight:700;cursor:pointer}
+    .cash-toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:#101828;color:#fff;padding:.8rem 1.1rem;border-radius:12px;display:none;max-width:90vw}
+    @media(max-width:850px){.cash-tables{grid-template-columns:repeat(2,minmax(0,1fr))}.cash-stats{grid-template-columns:1fr 1fr 1fr}}
+    @media(max-width:560px){.cash-wrap{width:calc(100% - 1rem);padding-top:1rem}.cash-tables{grid-template-columns:1fr}.cash-stats{gap:.5rem}.cash-stat{padding:.75rem}.cash-stat strong{font-size:1.1rem}.cash-history-row{grid-template-columns:1fr 1fr}.cash-history-row span:nth-child(3),.cash-history-row span:nth-child(4){font-size:.78rem}}
+  </style>
+</head>
+<body class="cash">
+  <header class="cash-top">
+    <div class="cash-brand">💳 Sistema do Bar<small>Caixa e fechamento de comandas</small></div>
+    <button class="btn-sm btn-ghost" id="logout" style="color:#fff">Sair</button>
+  </header>
+  <main class="cash-wrap">
+    <div class="cash-heading"><div><h1>Caixa</h1><p>Confira o consumo por mesa e registre o pagamento.</p></div><button class="cash-refresh" id="refresh">↻ Atualizar</button></div>
+    <div class="cash-stats">
+      <div class="cash-stat"><span>Mesas com consumo em aberto</span><strong id="open-count">—</strong></div>
+      <div class="cash-stat"><span>Total em aberto</span><strong id="open-total">—</strong></div>
+      <div class="cash-stat"><span>Recebido hoje nesta sessão</span><strong id="paid-total">—</strong></div>
+    </div>
+    <h2 class="cash-section">Contas em aberto</h2>
+    <div id="tables" class="cash-tables"><div class="cash-empty">Carregando contas…</div></div>
+    <h2 class="cash-section">Pagamentos recentes</h2>
+    <div id="history" class="cash-history"><div class="cash-history-row">Carregando histórico…</div></div>
+  </main>
+  <div id="toast" class="cash-toast" role="status"></div>
+  <script src="config.js"></script>
+  <script type="module" src="js/cashier.js"></script>
+</body>
+</html>
