@@ -65,7 +65,7 @@ export function createApp({ runSeed = true } = {}) {
   });
 
   // Clean URLs for the staff screens and legal pages.
-  for (const page of ['admin', 'bar', 'kitchen', 'impressum', 'datenschutz']) {
+  for (const page of ['admin', 'bar', 'kitchen', 'cashier', 'impressum', 'datenschutz']) {
     app.get(`/${page}`, (req, res) => res.sendFile(path.join(config.publicDir, `${page}.html`)));
   }
 
