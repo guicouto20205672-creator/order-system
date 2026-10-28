@@ -17,19 +17,19 @@ services:
       # Allowed frontend origin(s) for CORS — your GitHub Pages URL, e.g.
       #   https://<user>.github.io
       - key: CORS_ORIGIN
-        sync: false
+        value: https://guicouto20205672-creator.github.io
       # Base URL used in waiter links — your GitHub Pages app URL, e.g.
       #   https://<user>.github.io/order-system
       - key: FRONTEND_URL
-        sync: false
+        value: https://guicouto20205672-creator.github.io/order-system
       - key: SESSION_SECRET
         generateValue: true
       - key: PRINTER_TYPE
         value: none
       - key: DEFAULT_LANG
-        value: de
+        value: pt-BR
       - key: CURRENCY
-        value: EUR
+        value: BRL
       # NOTE: the free plan has an EPHEMERAL filesystem (data is lost on
       # redeploy/sleep). For a real event use a paid instance with a disk:
       # uncomment the block below and set DB_PATH=/data/orderflow.db.
