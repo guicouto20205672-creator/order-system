@@ -88,6 +88,16 @@ db.exec(`
     note       TEXT
   );
 
+  CREATE TABLE IF NOT EXISTS payments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    event_id INTEGER NOT NULL,
+    table_no TEXT NOT NULL,
+    amount REAL NOT NULL,
+    method TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    order_ids TEXT NOT NULL
+  );
+
   CREATE TABLE IF NOT EXISTS meta (
     key   TEXT PRIMARY KEY,
     value TEXT
@@ -110,6 +120,8 @@ ensureColumn('waiters', 'event_id', 'event_id INTEGER');
 ensureColumn('orders', 'event_id', 'event_id INTEGER');
 ensureColumn('orders', 'order_no', 'order_no INTEGER');
 ensureColumn('orders', 'client_key', 'client_key TEXT');
+ensureColumn('orders', 'paid_at', 'paid_at INTEGER');
+ensureColumn('orders', 'payment_method', 'payment_method TEXT');
 ensureColumn('events', 'owner_id', 'owner_id INTEGER');
 ensureColumn('accounts', 'owner_id', 'owner_id INTEGER');
 ensureColumn('accounts', 'active_event_id', 'active_event_id INTEGER');
