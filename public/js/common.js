@@ -91,14 +91,47 @@ export const STR = {
     eventsCount: 'Events', noFests: 'No events yet', roleSuper: 'Super-admin', cannotDeleteLastSuper: 'You cannot remove the last super-admin.',
     deleteFestAdminConfirm: 'Permanently delete this fest admin with all their events and data?',
   },
+  'pt-BR': {
+    appName: 'Sistema do Bar',
+    waiter: 'Garçom', bar: 'Bar', kitchen: 'Cozinha', admin: 'Administração',
+    selectRole: 'Escolha uma tela', login: 'Entrar', logout: 'Sair', password: 'Senha', wrongPassword: 'Senha incorreta',
+    table: 'Mesa', note: 'Observação', total: 'Total', send: 'Enviar pedido', cart: 'Comanda', empty: 'Nenhum item selecionado',
+    sent: 'Pedido enviado!', clear: 'Limpar', required: 'obrigatório', tableRequired: 'Informe o número da mesa (0 = sem mesa).',
+    finishOrder: 'Revisar pedido', reviewTitle: 'Conferir pedido', back: 'Voltar', savedOffline: 'Salvo offline — será enviado automaticamente',
+    myOrders: 'Meus pedidos', orders: 'Pedidos', done: 'Concluído', reprint: 'Imprimir novamente',
+    waiters: 'Garçons', addWaiter: 'Adicionar garçom', name: 'Nome', validFor: 'Validade (horas)',
+    link: 'Link', newLink: 'Novo link', copy: 'Copiar', copied: 'Copiado!', revoke: 'Desativar', reactivate: 'Reativar',
+    remove: 'Excluir', active: 'ativo', expired: 'expirado', revoked: 'desativado',
+    menu: 'Cardápio', category: 'Categoria', price: 'Preço', station: 'Setor', addCategory: 'Categoria', addArticle: 'Produto',
+    save: 'Salvar', activeShort: 'Ativo', importMenu: 'Importar cardápio', exportMenu: 'Exportar (CSV)', importBtn: 'Importar',
+    replaceMenu: 'Substituir existentes', imported: 'produtos importados',
+    importHint: 'CSV separado por ponto e vírgula: Categoria;Produto;Preço;Setor(drinks/food);Ativo — uma linha por produto.',
+    invalidLink: 'Este link é inválido ou expirou. Fale com o administrador.', connecting: 'Conectando…', noOpen: 'Nenhum pedido em aberto',
+    waiterName: 'Garçom', qty: 'Qtd.', print: 'Imprimir', share: 'Compartilhar', allDone: 'Tudo pronto',
+    username: 'Usuário', wrongCredentials: 'Usuário ou senha incorretos', tooManyTries: 'Muitas tentativas. Aguarde um minuto e tente novamente.',
+    team: 'Equipe', addAccount: 'Adicionar usuário', role: 'Função', stationsTitle: 'Criar acesso para bar/cozinha',
+    stationsHint: 'Esses acessos abrem as telas do bar e da cozinha e mostram os pedidos do evento ativo.',
+    roleAdmin: 'Administrador', roleStation: 'Bar/Cozinha', newPassword: 'Nova senha', deactivate: 'Desativar', you: 'você',
+    lastAdminError: 'O último administrador ativo não pode ser removido.', dangerZone: 'Área de risco', resetOrders: 'Apagar pedidos',
+    resetOrdersWaiters: 'Apagar pedidos e garçons', resetConfirm: 'Tem certeza de que deseja apagar todos os pedidos permanentemente?',
+    resetDone: 'Dados reiniciados', changePw: 'Alterar senha', events: 'Eventos', addEvent: 'Novo evento', eventName: 'Nome do evento',
+    copyMenu: 'Copiar cardápio de', noCopy: 'Cardápio padrão', activate: 'Ativar', activeBadge: 'ativo', closeEvent: 'Encerrar',
+    reopenEvent: 'Reabrir', archived: 'encerrado', deleteEvent: 'Excluir', statistics: 'Relatórios', selectEvent: 'Evento',
+    revenue: 'Faturamento', ordersCount: 'Pedidos', avgOrder: 'Ticket médio', items: 'Produtos', perWaiter: 'Por garçom',
+    perProduct: 'Produtos vendidos', perStation: 'Por setor', product: 'Produto', qtySold: 'Quantidade',
+    exportCsv: 'Exportar CSV', noData: 'Ainda não há dados', festAdmins: 'Administradores', addFestAdmin: 'Adicionar administrador',
+    owner: 'Responsável', eventsCount: 'Eventos', noFests: 'Nenhum evento cadastrado', roleSuper: 'Superadministrador',
+    cannotDeleteLastSuper: 'O último superadministrador não pode ser removido.',
+    deleteFestAdminConfirm: 'Excluir este administrador e todos os seus eventos e dados permanentemente?',
+  },
 };
 
-let LANG = 'de';
+let LANG = 'pt-BR';
 let CURRENCY = 'EUR';
-export function t(key) { return (STR[LANG] || STR.de)[key] ?? key; }
+export function t(key) { return (STR[LANG] || STR.de)[key] ?? STR.en[key] ?? key; }
 export function setLang(l) { if (STR[l]) LANG = l; }
 export function money(v) {
-  return new Intl.NumberFormat(LANG === 'de' ? 'de-AT' : 'en-US', {
+  return new Intl.NumberFormat(LANG === 'de' ? 'de-AT' : (LANG === 'pt-BR' ? 'pt-BR' : 'en-US'), {
     style: 'currency', currency: CURRENCY,
   }).format(v || 0);
 }
@@ -114,7 +147,7 @@ export function currencySymbol() {
   }
 }
 export function time(ts) {
-  return new Date(ts).toLocaleTimeString(LANG === 'de' ? 'de-AT' : 'en-US', {
+  return new Date(ts).toLocaleTimeString(LANG === 'de' ? 'de-AT' : (LANG === 'pt-BR' ? 'pt-BR' : 'en-US'), {
     hour: '2-digit', minute: '2-digit',
   });
 }
