@@ -452,6 +452,66 @@ router.get('/admin/orders', requireAdmin, (req, res) => {
   res.json(listOrders({ eventId, limit: Number(req.query.limit) || 200 }));
 });
 
+// ---------- cashier: open table accounts and payments ----------
+router.get('/admin/cash/tables', requireAdmin, (req, res) => {
+  const eventId = getActiveEventIdFor(req.staff);
+  assertEvent(req, eventId);
+  const rows = db.prepare(
+    `SELECT o.id, o.order_no, o.table_no, o.created_at, w.name AS waiter_name,
+            COALESCE(SUM(i.price * i.qty), 0) AS total
+       FROM orders o
+       LEFT JOIN waiters w ON w.id = o.waiter_id
+       LEFT JOIN order_items i ON i.order_id = o.id
+      WHERE o.event_id = ? AND o.paid_at IS NULL
+      GROUP BY o.id
+      ORDER BY o.created_at ASC`
+  ).all(eventId);
+  const tables = new Map();
+  for (const row of rows) {
+    const key = String(row.table_no ?? '').trim();
+    if (!tables.has(key)) tables.set(key, { table_no: key, total: 0, orders: [], first_order_at: row.created_at });
+    const table = tables.get(key);
+    table.total += Number(row.total) || 0;
+    table.orders.push({ id: row.id, order_no: row.order_no, waiter_name: row.waiter_name, created_at: row.created_at, total: Number(row.total) || 0 });
+  }
+  res.json([...tables.values()].sort((a, b) => a.table_no.localeCompare(b.table_no, 'pt-BR', { numeric: true })));
+});
+
+router.post('/admin/cash/close', requireAdmin, (req, res) => {
+  const eventId = getActiveEventIdFor(req.staff);
+  assertEvent(req, eventId);
+  const tableNo = String(req.body?.tableNo ?? '').trim();
+  const method = String(req.body?.method ?? '').trim().toLowerCase();
+  if (!tableNo) return res.status(400).json({ error: 'table_required' });
+  if (!['dinheiro', 'pix', 'cartao_credito', 'cartao_debito'].includes(method))
+    return res.status(400).json({ error: 'invalid_payment_method' });
+
+  const openOrders = db.prepare(
+    'SELECT id FROM orders WHERE event_id = ? AND table_no = ? AND paid_at IS NULL ORDER BY created_at'
+  ).all(eventId, tableNo);
+  if (!openOrders.length) return res.status(404).json({ error: 'no_open_orders' });
+  const ids = openOrders.map((o) => o.id);
+  const placeholders = ids.map(() => '?').join(',');
+  const amount = db.prepare(
+    `SELECT COALESCE(SUM(i.price * i.qty), 0) AS total FROM order_items i WHERE i.order_id IN (${placeholders})`
+  ).get(...ids).total;
+  const paidAt = Date.now();
+  const tx = db.transaction(() => {
+    db.prepare(`UPDATE orders SET paid_at = ?, payment_method = ? WHERE id IN (${placeholders}) AND paid_at IS NULL`)
+      .run(paidAt, method, ...ids);
+    db.prepare('INSERT INTO payments (event_id, table_no, amount, method, created_at, order_ids) VALUES (?, ?, ?, ?, ?, ?)')
+      .run(eventId, tableNo, amount, method, paidAt, JSON.stringify(ids));
+  });
+  tx();
+  res.json({ ok: true, table_no: tableNo, amount, method, paid_at: paidAt, orders: ids.length });
+});
+
+router.get('/admin/cash/payments', requireAdmin, (req, res) => {
+  const eventId = getActiveEventIdFor(req.staff);
+  assertEvent(req, eventId);
+  res.json(db.prepare('SELECT id, table_no, amount, method, created_at, order_ids FROM payments WHERE event_id = ? ORDER BY created_at DESC LIMIT 100').all(eventId));
+});
+
 router.post('/admin/reset', requireAdmin, (req, res) => {
   const eventId = getActiveEventIdFor(req.staff);
   assertEvent(req, eventId);
